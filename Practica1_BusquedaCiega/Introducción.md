@@ -15,15 +15,18 @@ Entendiendo los Algoritmos:
 Problemas:
 
 A. Laberintos
+
 		Genera laberintos al azar de tamaños 10x10, 20x20 y 50x50.
 		Implementa los algoritmos para encontrar un camino a través de cada laberinto.
 		La implementación pueda manejar diferentes tamaños.
 
 B. El problema de las jarras
+
 		Es un problema clásico de medir agua usando dos garrafas de capacidades diferentes.
 		Los algoritmos tratan de encontrar una solución a este problema. Se definin los estados y las transiciones de las jarras.
 
 C. El problema de los 8 puzles
+
 		Consiste en un rompecabezas con una cuadrícula de 3x3, con 8 fichas numeradas y un espacio vacío.
 		El objetivo es organizar las fichas en un orden específico.
 		Usando DFS y BFS para resolver el acertijo. Se representa el estado del rompecabezas y los posibles movimientos.
