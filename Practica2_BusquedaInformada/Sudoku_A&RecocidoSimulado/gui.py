@@ -34,13 +34,11 @@ class ModernSudokuApp(ctk.CTk):
         self.sidebar.grid(row=0, column=0, sticky="nsew")
 
         ctk.CTkLabel(self.sidebar, text="SUDOKU", font=ctk.CTkFont(size=32, weight="bold")).pack(pady=15)
-        ctk.CTkLabel(self.sidebar, text="IA", text_color="yellow", font=ctk.CTkFont(size=26, weight="bold")).pack(
-            pady=0)
+        ctk.CTkLabel(self.sidebar, text="IA", text_color="yellow", font=ctk.CTkFont(size=26, weight="bold")).pack(pady=0)
         ctk.CTkLabel(self.sidebar, text="", font=ctk.CTkFont(size=20)).pack(pady=15)
 
         ctk.CTkLabel(self.sidebar, text="Nivel de Dificultad:", font=ctk.CTkFont(size=14, weight="bold")).pack(pady=5)
-        self.lvl_btn = ctk.CTkSegmentedButton(self.sidebar, values=["Fácil", "Medio", "Difícil"],
-                                              command=self.generate_new_board)
+        self.lvl_btn = ctk.CTkSegmentedButton(self.sidebar, values=["Fácil", "Medio", "Difícil"], command=self.generate_new_board)
         self.lvl_btn.set("Fácil")
         self.lvl_btn.pack(padx=20, pady=10)
 

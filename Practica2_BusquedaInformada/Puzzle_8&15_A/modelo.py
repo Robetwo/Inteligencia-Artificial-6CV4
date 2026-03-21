@@ -8,10 +8,12 @@ class PuzzleModel:
 
     @staticmethod
     def h_misplaced(state, goal):
+        # Fichas fuera de lugar (ignora el cero)
         return np.sum((state != goal) & (state != 0))
 
     @staticmethod
     def h_manhattan(state, goal):
+        # Distancia Manhattan pura
         dist = 0
         for i in range(state.shape[0]):
             for j in range(state.shape[1]):
@@ -20,10 +22,3 @@ class PuzzleModel:
                     gr, gc = PuzzleModel.get_pos(val, goal)
                     dist += abs(i - gr) + abs(j - gc)
         return dist
-
-    @staticmethod
-    def h_custom(state, goal):
-        manhattan = PuzzleModel.h_manhattan(state, goal)
-        conflicts = 0
-        if state[-1, -1] != 0: conflicts += 2
-        return manhattan + conflicts
