@@ -91,6 +91,7 @@ class PuzzleApp(ctk.CTk):
         ctk.CTkLabel(self.sidebar,
                      text="Configuración",
                      font=ctk.CTkFont(size=18, weight="bold")).pack(pady=10)
+
         ctk.CTkLabel(self.sidebar,
                      text="Tamaño:",
                      font=("bold", 14)).pack(pady=10)
@@ -277,7 +278,7 @@ class PuzzleApp(ctk.CTk):
 
         for _ in range(moves):
 
-            # Elige una dirección al azar: arriba, abajo, izq, der
+            # Elige una dirección al azar: arriba, abajo, izquierda, derecha
             dr, dc = random.choice([(-1, 0), (1, 0), (0, -1), (0, 1)])
             nr, nc = r + dr, c + dc  # Nueva posición tentativa
 
@@ -320,7 +321,7 @@ class PuzzleApp(ctk.CTk):
                 val = target[r, c]  # Qué número hay en esta posición
                 canv, img_canvas_id = self.cells[(r, c)]
 
-                if val == 0:  # Si es el espacio vacío
+                if val == 0:  # Sí es el espacio vacío
                     canv.itemconfig(img_canvas_id, image="")  # No muestra imagen
 
                 else:

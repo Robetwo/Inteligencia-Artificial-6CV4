@@ -56,7 +56,7 @@ class AStarSolver(SudokuSolver):
 
 class SimulatedAnnealingSolver(SudokuSolver):
     """
-    RECOCIDO SIMULADO (Metaheurística):
+    RECOCIDO SIMULADO (Meta heurística):
     Inspirado en cómo los metales se enfrían. Empieza aceptando errores 
     para saltar 'mínimos locales' y poco a poco se vuelve más estricto.
     """
