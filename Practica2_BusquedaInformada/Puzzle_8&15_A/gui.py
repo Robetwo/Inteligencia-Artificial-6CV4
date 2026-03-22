@@ -15,7 +15,7 @@ class PuzzleApp(ctk.CTk):
 
         # --- Configuración básica de la ventana ---
         self.title("N-Puzzle - A*")  # Título de la aplicación
-        self.geometry("800x600")  # Tamaño inicial en píxeles
+        self.geometry("800x580")  # Tamaño inicial en píxeles
 
         # --- Variables de estado del juego ---
         self.size = 3               # Tamaño por defecto (3x3)
@@ -38,8 +38,9 @@ class PuzzleApp(ctk.CTk):
         self.load_local_image()     # Carga la primera imagen
         self.generate_puzzle()      # Crea y mezcla el primer tablero
 
+    # Configura el estilo visual de la tabla (Treeview) de estadísticas
     def setup_styles(self):
-        # Configura el estilo visual de la tabla (Treeview) de estadísticas
+
         style = ttk.Style()
         style.theme_use("default")  # Usa el tema base para poder sobreescribirlo
 
@@ -105,8 +106,10 @@ class PuzzleApp(ctk.CTk):
 
         # Botón para cambiar a la siguiente foto de la lista
         self.btn_change_img = ctk.CTkButton(self.sidebar,
-                                            text="CAMBIAR IMAGEN",
-                                            height=45, fg_color="#34495e",
+                                            text="CAMBIAR FOTO",
+                                            height=45,
+                                            font=ctk.CTkFont(size=14, weight="bold"),
+                                            fg_color="#34495e",
                                             command=self.cycle_image)
 
         self.btn_change_img.pack(pady=2, padx=20)
@@ -115,10 +118,13 @@ class PuzzleApp(ctk.CTk):
         self.btn_random = ctk.CTkButton(self.sidebar,
                                         text="MEZCLAR",
                                         height=45,
+                                        font=ctk.CTkFont(size=14, weight="bold"),
                                         fg_color="#CF530A",
                                         command=self.generate_puzzle)
 
         self.btn_random.pack(pady=2, padx=20)
+
+        ctk.CTkLabel(self.sidebar, text="", font=ctk.CTkFont(size=20)).pack(pady=5)
 
         # Selección de Heurística (Cómo piensa la IA)
         ctk.CTkLabel(self.sidebar,
@@ -135,6 +141,7 @@ class PuzzleApp(ctk.CTk):
         self.btn_solve = ctk.CTkButton(self.sidebar,
                                        text="RESOLVER",
                                        height=50,
+                                       font=ctk.CTkFont(size=14, weight="bold"),
                                        fg_color="#149900",
                                        command=self.run_ai)
 
@@ -163,7 +170,7 @@ class PuzzleApp(ctk.CTk):
 
         # Tabla de estadísticas (inferior)
         self.tree_frame = ctk.CTkFrame(self.main_container)
-        self.tree_frame.pack(fill="x", side="bottom", pady=0)
+        self.tree_frame.pack(fill="x", side="bottom", pady=0, padx=15)
 
         cols = ("D", "H", "T", "M", "S")  # Identificadores de columnas
         self.tree = ttk.Treeview(self.tree_frame, columns=cols, show="headings", height=4)
@@ -359,7 +366,7 @@ class PuzzleApp(ctk.CTk):
 
         if success:
             # Inserta los datos de rendimiento en la tabla de la interfaz
-            self.tree.insert("", 0, values=(d, h, f"{t:.4f}", f"{m:.1f}", len(path) - 1))
+            self.tree.insert("", 0, values=(d, h, f"{t:.1f}", f"{m:.1f}", len(path) - 1))
 
             # Inicia la animación de las piezas moviéndose solas
             self.animate_path(path)
