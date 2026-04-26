@@ -95,8 +95,9 @@ class Agente:
             # Si el humano tiene 3 fichas y hay 1 espacio vacío, el humano ganará en el próximo turno.
             # Se restan 1000 puntos. Este valor es tan negativo que obligará al algoritmo Minimax
             # a retroceder en el árbol y buscar una jugada que bloquee este escenario a toda costa.
-            if contador_humano == 3 and contador_vacio == 1:
-                score -= 1000
+
+            #if contador_humano == 3 and contador_vacio == 1:
+               # score -= 1000
 
         # ---------------------------------------------------------
         # 3. EVALUACIÓN POSICIONAL (Control del Tablero)
