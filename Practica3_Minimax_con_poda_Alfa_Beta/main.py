@@ -1,16 +1,16 @@
-import tkinter as tk
+import customtkinter as ctk
 from gui import GameGUI
 
 def main():
-    root = tk.Tk()
+    # Inicializar la raíz usando CustomTkinter
+    root = ctk.CTk()
 
-    # Para sistemas Windows o Linux (como WSL renderizado con servidor X),
-    # esto fuerza un estilo más limpio si el sistema operativo lo permite.
+    # Manejo de DPI (seguro para cualquier SO)
     try:
         from ctypes import windll
         windll.shcore.SetProcessDpiAwareness(1)
-    except:
-        pass  # Ignorar en sistemas no Windows o si falla
+    except Exception:
+        pass
 
     app = GameGUI(root)
     root.mainloop()
