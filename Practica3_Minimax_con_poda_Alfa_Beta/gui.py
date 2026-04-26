@@ -1,8 +1,9 @@
+import math
 import tkinter as tk
 from tkinter import messagebox
 import time
 import tracemalloc
-from game_model import TicTacToe4x4
+from models import TicTacToe4x4
 from algorithms import Agent
 
 # Paleta Modo Oscuro
