@@ -96,8 +96,8 @@ class Agente:
             # Se restan 1000 puntos. Este valor es tan negativo que obligará al algoritmo Minimax
             # a retroceder en el árbol y buscar una jugada que bloquee este escenario a toda costa.
 
-            #if contador_humano == 3 and contador_vacio == 1:
-               # score -= 1000
+            if contador_humano == 3 and contador_vacio == 1:
+               score -= 1000
 
         # ---------------------------------------------------------
         # 3. EVALUACIÓN POSICIONAL (Control del Tablero)
@@ -211,44 +211,84 @@ class Agente:
             return min_eval, best_move
 
     def minimax_alpha_beta(self, model, depth, alpha, beta, is_maximizing):
+        """
+        Algoritmo Minimax optimizado con Poda Alfa-Beta.
+        'alpha': El mejor valor (el más alto) que el Maximizador (IA) puede asegurar hasta ahora en su camino.
+        'beta': El mejor valor (el más bajo) que el Minimizador (Humano) puede asegurar hasta ahora en su camino.
+        """
+
+        # 1. MÉTRICA DE RENDIMIENTO
+        # Al comparar este contador en la interfaz gráfica, notarás que este número
+        # es drásticamente menor que en el Minimax puro para la misma jugada.
         self.nodos_explorados += 1
 
+        # CASO BASE (Igual que en Minimax puro)
         if depth == 0 or model.is_game_over():
             return self.evaluar_tablero(model), None
 
         moves = model.get_available_moves()
         best_move = None
 
+        # ---------------------------------------------------------
+        # TURNO DE LA IA (Maximizador)
+        # ---------------------------------------------------------
         if is_maximizing:
             max_eval = -math.inf
+
             for move in moves:
+                # Simular movimiento y llamar recursivamente
                 model.make_move(move[0], move[1], self.ia)
                 eval_score, _ = self.minimax_alpha_beta(model, depth - 1, alpha, beta, False)
                 model.undo_move(move[0], move[1])
 
+                # Actualizar el mejor movimiento de este nodo
                 if eval_score > max_eval:
                     max_eval = eval_score
                     best_move = move
 
+                # ACTUALIZACIÓN DE ALFA
+                # Alfa guarda la puntuación más alta que la IA ha encontrado en esta rama o en las anteriores.
                 alpha = max(alpha, eval_score)
 
+                # LA PODA (Corte del ciclo)
+                # Si 'beta' (la mejor opción garantizada para el humano en el nivel superior) es menor
+                # o igual a 'alpha' (la puntuación que la IA ya se garantizó en este sub-árbol)...
                 if beta <= alpha:
-                    break  # Poda Alfa-Beta
+                    break  # ¡PODA!
+                    # Salimos del ciclo 'for'. No tiene sentido seguir evaluando el resto de los 'moves'
+                    # porque ya sabemos que el Humano, que juega perfecto, NUNCA nos permitirá llegar
+                    # a este escenario (él elegirá una rama superior que le convenga más).
 
             return max_eval, best_move
 
+        # ---------------------------------------------------------
+        # TURNO DEL HUMANO (Minimizador)
+        # ---------------------------------------------------------
         else:
             min_eval = math.inf
+
             for move in moves:
+                # Simular movimiento y llamar recursivamente
                 model.make_move(move[0], move[1], self.humano)
                 eval_score, _ = self.minimax_alpha_beta(model, depth - 1, alpha, beta, True)
                 model.undo_move(move[0], move[1])
 
+                # Actualizar el peor movimiento para la IA (mejor para el humano)
                 if eval_score < min_eval:
                     min_eval = eval_score
                     best_move = move
 
+                # ACTUALIZACIÓN DE BETA
+                # Beta guarda la puntuación más baja que el humano ha encontrado hasta ahora.
                 beta = min(beta, eval_score)
+
+                # LA PODA (Corte del ciclo)
+                # Si 'beta' (el daño que el humano ya sabe qué puede hacernos) es menor o igual
+                # a 'alpha' (el escudo/puntaje que la IA ya se aseguró en un turno previo)...
                 if beta <= alpha:
-                    break  # Poda Alfa-Beta
+                    break  # ¡PODA!
+                    # La IA en el nivel superior nunca elegirá bajar por este camino porque
+                    # ya tiene una opción mejor ('alpha'). Por tanto, no perdemos tiempo
+                    # calculando qué más podría hacer el humano aquí.
+
             return min_eval, best_move
